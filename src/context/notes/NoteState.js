@@ -35,8 +35,39 @@ const NoteState = (props)=>{
     // eslint-disable-next-line
     const [notes, setNotes] = useState(notesInitial)
 
+    // Add Note 
+
+    const addNote = (title , description , tag )=>{
+        console.log("Add New note");
+        const note = {
+            "_id": "66a38832bfdbf7a2f605e87f",
+            "user": "66a21c040b8a980f1c0be150",
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "date": "2024-07-26T11:27:46.372Z",
+            "__v": 0
+        };
+        setNotes(notes.concat(note));
+    }
+
+
+    // Delete a Note
+    
+    const deleteNote = (id)=>{
+        console.log("deleting with note with id" + id);
+        const newNotes = notes.filter((note)=>{return note._id !== id})
+        setNotes(newNotes);
+    }
+
+    // Edit a Note
+
+    const editNote = (id ,title , description , tag  )=>{
+        
+    }
+
     return (
-        <NoteContext.Provider value={{notes ,useState}}>
+        <NoteContext.Provider value={{notes ,addNote , deleteNote , editNote}}>
             {props.children}
         </NoteContext.Provider>
     )
