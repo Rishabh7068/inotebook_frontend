@@ -13,7 +13,7 @@ const Login = () => {
   const handleclick = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/auth/login`, {
+      const response = await fetch(`${process.env.REACT_APP_server}/api/auth/login`, {
         method: "POST",
         headers: {
           "content-Type": "application/json",

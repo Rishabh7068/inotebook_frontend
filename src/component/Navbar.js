@@ -30,7 +30,7 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link ${
-                  location.pathname === "/home" ? "active" : ""
+                  location.pathname === "/" ? "active" : ""
                 }`}
                 aria-current="page"
                 to="/home"
@@ -62,7 +62,7 @@ const Navbar = () => {
         ) : (
           <form className="d-flex">
             <div className="container">
-              <span class="badge text-bg-light mx-3">
+              <span className="badge text-bg-light mx-3">
                 {localStorage.getItem("name")}
               </span>
               <button className="btn btn-primary" onClick={handlelogout}>

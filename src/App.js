@@ -14,11 +14,8 @@ import Signup from "./component/Signup";
 
 
 function App() {
-  
-  
   return (
     <>
- 
   <Alertstate>
     <NoteState>
     <BrowserRouter>

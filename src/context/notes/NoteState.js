@@ -5,7 +5,7 @@ import alertContext from "../alert/alertContext";
 
 
 const NoteState = (props) => {
-    const host = "http://localhost:8000";
+  const host = process.env.REACT_APP_server;
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   const context = useContext(alertContext);
@@ -13,7 +13,8 @@ const NoteState = (props) => {
   
 
   // Get All notes - Working Fine
-    const getNotes = async() => {        
+    const getNotes = async() => {      
+      
         try {
             const response = await fetch(`${host}/api/notes/fetchallnotes`, {
                 method:'GET',
