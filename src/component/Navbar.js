@@ -6,12 +6,13 @@ const Navbar = () => {
   const Navigate = useNavigate();
   const handlelogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("name");
     Navigate("/login");
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/">
           iNoteBook
         </Link>
         <button
@@ -65,7 +66,7 @@ const Navbar = () => {
               <span className="badge text-bg-light mx-3">
                 {localStorage.getItem("name")}
               </span>
-              <button className="btn btn-primary" onClick={handlelogout}>
+              <button className="btn btn-success" onClick={handlelogout}>
                 Logout
               </button>
             </div> 

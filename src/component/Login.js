@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import alertContext from "../context/alert/alertContext";
 
@@ -9,6 +9,12 @@ const Login = () => {
   const context = useContext(alertContext);
   const { showAlert } = context;
   const Navigate = useNavigate();
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      Navigate("/home");
+    }
+  });
 
   const handleclick = async (e) => {
     e.preventDefault();

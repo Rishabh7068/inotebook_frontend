@@ -9,6 +9,7 @@ import { Alert } from "./component/Alert";
 import Alertstate from "./context/alert/Alertstate";
 import Login from "./component/Login";
 import Signup from "./component/Signup";
+import Welcome from "./component/Welcome";
 
 
 
@@ -22,8 +23,8 @@ function App() {
       <Navbar/>
       <Alert/>
         <Routes>
+              <Route exact path="/"  element={<><Welcome/></>}/>
               <Route exact path="/login"  element={<><Login/></>}/>
-              
               <Route exact path="/signup"  element={<><Signup/></>}/>
 
              <Route exact path="/home"  element={<><Home/></>}/>
