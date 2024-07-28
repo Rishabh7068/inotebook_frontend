@@ -14,6 +14,10 @@ const Signup = () => {
 
     const handleclick= async(e)=>{
         e.preventDefault();
+
+        if(pass.length < 5){
+          return showAlert("Invalid Credential","danger");
+        }
         
         try {
             const response = await fetch(`${process.env.REACT_APP_server}/api/auth/signup`, {
@@ -24,14 +28,13 @@ const Signup = () => {
                 body : JSON.stringify({name : name, email : email,password : pass})
         });
         const json = await response.json();
+        console.log(json);
         if(json.authtoken){
             Navigate("/login");
             showAlert("Signup successfull","success");
         }else{
             showAlert(json.error,"danger");
         }
-
-        
         } catch (error) {
             
             console.log(error);
