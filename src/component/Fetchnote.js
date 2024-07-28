@@ -1,11 +1,16 @@
 import { React, useContext, useEffect, useRef ,useState } from "react";
 import { Noteitem } from "./Noteitem";
 import noteContext from "../context/notes/noteContext";
+import { useNavigate } from "react-router-dom";
+import alertContext from "../context/alert/alertContext";
 
 export const Fetchnote = () => {
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
   const ref = useRef(null);
+  const Navigate = useNavigate();
+  const alertcontext = useContext(alertContext);
+  const { showAlert } = alertcontext;
   
   const notess = {
     title : "",
@@ -21,7 +26,14 @@ export const Fetchnote = () => {
   };
 
   useEffect(() => {
-    getNotes();
+    if(localStorage.getItem('token') !== null){
+      getNotes();
+    }else{
+      showAlert("Login first","danger");
+      Navigate("/login");
+    }
+
+    
     // eslint-disable-next-line
   }, []);
 
@@ -119,15 +131,16 @@ const onchange =(e) =>{
                 Close
               </button>
               <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={handelonclink}>
-            Add Note
+            Update Note
           </button>
             </div>
           </div>
         </div>
       </div>
-
-      <h1>Your Note</h1>
+    <div className="container">
+    <h1>Your Note</h1>
       <div className="row">
+       <h3>{notes.length === 0 && "No notes to display"}</h3> 
         {notes.map((note) => {
           return (
             <div className="col-md-4" key={note._id}>
@@ -136,6 +149,7 @@ const onchange =(e) =>{
           );
         })}
       </div>
+    </div>
     </>
   );
 };

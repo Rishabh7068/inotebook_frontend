@@ -16,6 +16,7 @@ export const Addnote = () => {
     const handelonclink = (e) =>{
         e.preventDefault();
         addNote(note.title ,note.description , note.tag);
+        setNote(notess);
     }
 
     const onchange =(e) =>{
@@ -36,6 +37,7 @@ export const Addnote = () => {
               aria-describedby="emailHelp"
               placeholder="Enter title"
               name='title'
+              value={note.title}
               onChange={onchange}
             />
           </div>
@@ -47,6 +49,7 @@ export const Addnote = () => {
               rows="3"
               name='description'
               placeholder="Write Your Note"
+              value={note.description}
               onChange={onchange}
             ></textarea>
           </div>
@@ -58,6 +61,7 @@ export const Addnote = () => {
               id="tag"
               name='tag'
               placeholder="Tag"
+              value={note.tag}
               onChange={onchange}
             />
           </div>

@@ -3,12 +3,14 @@ import NoteContext from "./noteContext";
 import alertContext from "../alert/alertContext";
 
 
+
 const NoteState = (props) => {
     const host = "http://localhost:8000";
   const notesInitial = [];
   const [notes, setNotes] = useState(notesInitial);
   const context = useContext(alertContext);
   const {showAlert} = context;
+  
 
   // Get All notes - Working Fine
     const getNotes = async() => {        
@@ -16,7 +18,7 @@ const NoteState = (props) => {
             const response = await fetch(`${host}/api/notes/fetchallnotes`, {
                 method:'GET',
                 headers :{
-                    'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZhMjFjMDQwYjhhOTgwZjFjMGJlMTUwIn0sImlhdCI6MTcyMTkwMDQ3Mn0.DnPOZd9L-3QVSv8oa9rbrNMFW2zZcht_yt7JRrBOuos'
+                    'auth-token' : localStorage.getItem('token')
                 },
             }); 
             const json = await response.json();
@@ -29,7 +31,8 @@ const NoteState = (props) => {
   // Add Note - Working fine
   const addNote = async(title, description, tag) => {   
     if(title.length < 3  || description.length < 5){
-      return console.log("title must be of 3 length and description must be of 5 length");
+      showAlert("Title must be of 3 length and Description must be of 5 length","danger");
+      return;
     }
 
     try {
@@ -37,7 +40,7 @@ const NoteState = (props) => {
             method:'POST',
             headers :{
                 'content-Type' : 'application/json',
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZhMjFjMDQwYjhhOTgwZjFjMGJlMTUwIn0sImlhdCI6MTcyMTkwMDQ3Mn0.DnPOZd9L-3QVSv8oa9rbrNMFW2zZcht_yt7JRrBOuos'
+                'auth-token' : localStorage.getItem('token')
             },
             body : JSON.stringify({title, description ,tag})
         }); 
@@ -56,7 +59,7 @@ const NoteState = (props) => {
             method:'DELETE',
             headers :{
                 'content-Type' : 'application/json',
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZhMjFjMDQwYjhhOTgwZjFjMGJlMTUwIn0sImlhdCI6MTcyMTkwMDQ3Mn0.DnPOZd9L-3QVSv8oa9rbrNMFW2zZcht_yt7JRrBOuos'
+                'auth-token' : localStorage.getItem('token')
             },
         }); 
         const newNotes = notes.filter((note) => {
@@ -71,16 +74,23 @@ const NoteState = (props) => {
 
   // Edit a Note - Working Fine
   const editNote = async(id, title, description, tag) => {
+    if(title.length < 3  || description.length < 5){
+      showAlert("Title must be of 3 length and Description must be of 5 length","danger");
+      return;
+    }
     try {
       //fetch API
-     await fetch(`${host}/api/notes/updatenote/${id}`, {
+      await fetch(`${host}/api/notes/updatenote/${id}`, {
       method:'PUT',
       headers :{
           'content-Type' : 'application/json',
-          'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjZhMjFjMDQwYjhhOTgwZjFjMGJlMTUwIn0sImlhdCI6MTcyMTkwMDQ3Mn0.DnPOZd9L-3QVSv8oa9rbrNMFW2zZcht_yt7JRrBOuos'
+          'auth-token' : localStorage.getItem('token')
       },
       body : JSON.stringify({title, description ,tag})
-  });
+  }
+);
+
+
 
   let newNotes = JSON.parse(JSON.stringify(notes));
 
@@ -94,8 +104,9 @@ const NoteState = (props) => {
       break;
     }
   }
-  showAlert("Note Edited","success");
+
   setNotes(newNotes);
+  showAlert("Note Edited","success");
     } catch (error) {
       console.log(error);
     }
